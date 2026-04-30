@@ -1,0 +1,110 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  html,
+  body {
+    @apply bg-paper text-ink font-sans;
+  }
+
+  ::selection {
+    background: #5947ff;
+    color: #ffffff;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #ffffff;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #e5e5ea;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #5947ff;
+  }
+}
+
+@layer utilities {
+  /* Soft mesh gradient — animated, sits behind hero */
+  .mesh {
+    background:
+      radial-gradient(circle at 18% 20%, rgba(89, 71, 255, 0.18), transparent 38%),
+      radial-gradient(circle at 82% 12%, rgba(11, 26, 173, 0.12), transparent 40%),
+      radial-gradient(circle at 65% 85%, rgba(126, 112, 255, 0.16), transparent 45%),
+      radial-gradient(circle at 12% 90%, rgba(89, 71, 255, 0.10), transparent 50%);
+  }
+
+  .mesh-soft {
+    background:
+      radial-gradient(circle at 50% 50%, rgba(89, 71, 255, 0.12), transparent 60%),
+      radial-gradient(circle at 80% 0%, rgba(11, 26, 173, 0.10), transparent 50%);
+  }
+
+  .glass {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.65), rgba(255, 255, 255, 0.25));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  .mask {
+    overflow: hidden;
+    display: block;
+  }
+
+  /* Photo duotone — subtle violet wash */
+  .duotone {
+    filter: grayscale(1) contrast(1.05);
+    mix-blend-mode: luminosity;
+  }
+
+  .photo-frame {
+    box-shadow:
+      0 30px 60px -20px rgba(11, 26, 173, 0.18),
+      0 0 0 1px rgba(0, 0, 0, 0.04);
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Animated gradient text */
+  .grad-text {
+    background: linear-gradient(90deg, #5947ff 0%, #0b1aad 40%, #7e70ff 70%, #5947ff 100%);
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: shimmer 6s linear infinite;
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: 0% 50%;
+    }
+    100% {
+      background-position: 200% 50%;
+    }
+  }
+
+  .ring-violet-soft {
+    box-shadow: 0 0 0 1px rgba(89, 71, 255, 0.18), 0 24px 48px -24px rgba(89, 71, 255, 0.35);
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}

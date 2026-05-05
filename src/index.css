@@ -15,7 +15,7 @@
   }
 
   ::selection {
-    background: #5947ff;
+    background: #0b2e3f;
     color: #ffffff;
   }
 
@@ -30,7 +30,7 @@
     background: #e5e5ea;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #5947ff;
+    background: #0b2e3f;
   }
 }
 
@@ -38,16 +38,16 @@
   /* Soft mesh gradient — animated, sits behind hero */
   .mesh {
     background:
-      radial-gradient(circle at 18% 20%, rgba(89, 71, 255, 0.18), transparent 38%),
-      radial-gradient(circle at 82% 12%, rgba(11, 26, 173, 0.12), transparent 40%),
-      radial-gradient(circle at 65% 85%, rgba(126, 112, 255, 0.16), transparent 45%),
-      radial-gradient(circle at 12% 90%, rgba(89, 71, 255, 0.10), transparent 50%);
+      radial-gradient(circle at 18% 20%, rgba(11, 46, 63, 0.18), transparent 38%),
+      radial-gradient(circle at 82% 12%, rgba(6, 25, 35, 0.12), transparent 40%),
+      radial-gradient(circle at 65% 85%, rgba(45, 92, 110, 0.16), transparent 45%),
+      radial-gradient(circle at 12% 90%, rgba(11, 46, 63, 0.10), transparent 50%);
   }
 
   .mesh-soft {
     background:
-      radial-gradient(circle at 50% 50%, rgba(89, 71, 255, 0.12), transparent 60%),
-      radial-gradient(circle at 80% 0%, rgba(11, 26, 173, 0.10), transparent 50%);
+      radial-gradient(circle at 50% 50%, rgba(11, 46, 63, 0.12), transparent 60%),
+      radial-gradient(circle at 80% 0%, rgba(6, 25, 35, 0.10), transparent 50%);
   }
 
   .glass {
@@ -69,7 +69,7 @@
 
   .photo-frame {
     box-shadow:
-      0 30px 60px -20px rgba(11, 26, 173, 0.18),
+      0 30px 60px -20px rgba(6, 25, 35, 0.18),
       0 0 0 1px rgba(0, 0, 0, 0.04);
   }
 
@@ -79,7 +79,7 @@
 
   /* Animated gradient text */
   .grad-text {
-    background: linear-gradient(90deg, #5947ff 0%, #0b1aad 40%, #7e70ff 70%, #5947ff 100%);
+    background: linear-gradient(90deg, #0b2e3f 0%, #061923 40%, #2d5c6e 70%, #0b2e3f 100%);
     background-size: 200% 100%;
     -webkit-background-clip: text;
     background-clip: text;
@@ -97,7 +97,7 @@
   }
 
   .ring-violet-soft {
-    box-shadow: 0 0 0 1px rgba(89, 71, 255, 0.18), 0 24px 48px -24px rgba(89, 71, 255, 0.35);
+    box-shadow: 0 0 0 1px rgba(11, 46, 63, 0.18), 0 24px 48px -24px rgba(11, 46, 63, 0.35);
   }
 
   .no-scrollbar::-webkit-scrollbar {

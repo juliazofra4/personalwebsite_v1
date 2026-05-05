@@ -8,6 +8,7 @@ import {
   useMotionTemplate,
   useInView,
 } from 'framer-motion'
+import createGlobe from 'cobe'
 
 /* ─────────────────────────────────────────────────────────────────────────────
  * DATA
@@ -16,6 +17,13 @@ const PHOTO = '/images/julian-1.avif'
 const PHOTO_BW = '/images/julian-x.jpg'
 const PHOTO_YAKK = '/images/yakk-press.jpg'
 const LOGO = '/images/sharpei-logo.svg'
+
+const HERO_PHOTOS = [
+  '/images/julian-1.avif',
+  '/images/akka.jpeg',
+  '/images/forbes-30u30.jpg',
+  '/images/julian-google.jpeg',
+]
 
 const EXPERIENCE = [
   {
@@ -55,40 +63,41 @@ const PRESS = [
     date: '2024',
     headline: '30 Under 30 Europe — Retail & Ecommerce',
     quote: 'Featured as the youngest founder on the Forbes 30 Under 30 Europe Retail & Ecommerce list.',
-    href: 'https://www.forbes.com/30-under-30/europe/retail-ecommerce/',
+    href: 'https://www.forbes.com/profile/sharpei/',
+    image: '/images/forbes-30u30.jpg',
     accent: 'Honors',
   },
   {
     outlet: 'Podcast',
     date: '2024',
     headline: 'On the entrepreneurial journey',
-    quote: 'A long-form conversation about building Yakk and Sharpei — lessons from a young founder navigating Madrid to New York.',
+    quote: 'A long-form conversation about building Yakk and Sharpei — lessons as a young founder navigating Madrid to New York.',
     href: 'https://youtu.be/7y89DAvPcC8?si=t72v7slfj4hpo_K1',
     accent: 'Interview',
   },
   {
     outlet: 'Autónomos & Emprendedor',
     date: '2022',
-    headline: 'Lanzan la plataforma que permite a las empresas alquilar todo lo que necesitan',
-    quote: 'Yakk transforma cómo las empresas equipan a sus equipos — del comprar-usar-tirar al alquilar-usar-reusar.',
+    headline: 'The launch of Yakk — a platform that lets companies rent everything they need',
+    quote: 'A feature on the first version of my first startup, Yakk — built when I was 19 years old.',
     href: 'https://www.autonomosyemprendedor.es/articulo/tu-historia/emprendedores-lanzan-plataforma-que-permite-empresas-alquilar-todo-que-necesitan/20220527163018026839.html',
     accent: 'Yakk',
   },
   {
-    outlet: 'Slush 100',
-    date: '2022',
-    headline: 'One of the most promising European startups',
-    quote: 'Yakk shortlisted in the Slush 100 — Helsinki\'s global startup competition.',
-    href: 'https://slush.org/audience/startups/slush100',
-    accent: 'Recognition',
+    outlet: 'Akka',
+    date: '2024',
+    headline: 'Sharpei wins the first Akka pitch competition',
+    quote: 'Akka — a startup investment community and fund — selected Sharpei as the winner of its inaugural pitch competition.',
+    href: 'https://es.linkedin.com/posts/akka-spain_sharpei-se-convierte-en-la-primera-startup-activity-7271795776152817665-xEvT',
+    accent: 'Award',
   },
   {
-    outlet: 'Hardly Hustle',
+    outlet: 'Web Summit',
     date: '2024',
-    headline: '“We\'ve managed to create a real alternative to buying.”',
-    quote: 'The 23-year-old Spaniard behind Yakk and Sharpei on building circular models that work at scale.',
-    href: 'https://www.hardlyhustle.com/spotlight/julian-azofra',
-    accent: 'Interview',
+    headline: 'Pitching Sharpei on the Web Summit Startup Competition main stage',
+    quote: 'Selected to pitch Sharpei as part of Web Summit\'s Impact Startups, competing on the main stage in Lisbon.',
+    href: 'https://www.youtube.com/watch?app=desktop&v=KCjq95jd9Ck',
+    accent: 'Pitch',
   },
 ]
 
@@ -101,9 +110,16 @@ const COMMUNITIES = [
   { name: 'Draper University' },
   { name: 'Lanzadera', logoSrc: '/images/Lanzadera%20Logo.jpg' },
   { name: 'Tetuan Valley', logoSrc: '/images/tetuan-logo.png' },
-  { name: 'Forbes 30U30' },
+  { name: 'Forbes 30U30', logoSrc: '/images/Forbes%2030%20Under%2030%20logo.jpeg' },
 ]
 const FOCUS = ['FinTech', 'Embedded Finance', 'AI Infrastructure', 'Circular Economy', 'GTM']
+const CITIES = [
+  { name: 'Madrid', coords: [40.4168, -3.7038], tag: 'Origin', years: 'Born' },
+  { name: 'Lancaster', coords: [54.0466, -2.8007], tag: 'Studied', years: 'BSc CS' },
+  { name: 'Valencia', coords: [39.4699, -0.3763], tag: 'Lanzadera', years: '2021—22' },
+  { name: 'San Francisco', coords: [37.7749, -122.4194], tag: 'Founded Sharpei', years: 'Bay Area' },
+  { name: 'New York', coords: [40.7128, -74.006], tag: 'Now', years: '2023—' },
+]
 const LANGUAGES = [
   { l: 'Español', level: 'Native' }, { l: 'English', level: 'Native' }, { l: 'Deutsch', level: 'Working' },
 ]
@@ -126,6 +142,7 @@ export default function App() {
       <Hero />
       <TickerBand />
       <Journey />
+      <Atlas />
       <Press />
       <Arsenal />
       <Footer />
@@ -153,7 +170,7 @@ function Spotlight() {
     }
   }, [x, y])
 
-  const bg = useMotionTemplate`radial-gradient(520px circle at ${sx}px ${sy}px, rgba(89,71,255,0.06), transparent 60%)`
+  const bg = useMotionTemplate`radial-gradient(520px circle at ${sx}px ${sy}px, rgba(11,46,63,0.06), transparent 60%)`
   return (
     <motion.div
       aria-hidden
@@ -184,6 +201,7 @@ function Nav() {
         </a>
         <nav className="flex items-center gap-7">
           <NavLink href="#journey">Journey</NavLink>
+          <NavLink href="#atlas">Atlas</NavLink>
           <NavLink href="#press">Press</NavLink>
           <NavLink href="#arsenal">Arsenal</NavLink>
           <NavLink href="#contact">Contact</NavLink>
@@ -226,14 +244,14 @@ function Hero() {
         animate={{ rotate: 360 }}
         transition={{ duration: 60, repeat: Infinity, ease: 'linear' }}
         className="pointer-events-none absolute -right-40 -top-40 h-[600px] w-[600px] rounded-full opacity-60 blur-3xl"
-        style={{ background: 'radial-gradient(closest-side, rgba(89,71,255,0.18), transparent)' }}
+        style={{ background: 'radial-gradient(closest-side, rgba(11,46,63,0.18), transparent)' }}
       />
 
       <motion.div style={{ opacity }} className="relative mx-auto max-w-[1600px] px-6 pt-4 md:pt-8">
         <div className="grid grid-cols-12 gap-6">
           {/* LEFT — typography */}
           <motion.div style={{ y: yText }} className="relative z-10 col-span-12 md:col-span-7">
-            <h1 className="font-serif font-light tracking-tightest text-ink">
+            <h1 className="font-sans font-bold tracking-tightest text-ink">
               <MaskLine delay={0.05} className="block text-[16vw] leading-[0.92] md:text-[10.5vw]">Julián</MaskLine>
               <MaskLine delay={0.18} className="block text-[16vw] leading-[0.92] md:text-[10.5vw]"><span className="italic">Azofra.</span></MaskLine>
             </h1>
@@ -243,11 +261,8 @@ function Hero() {
               transition={{ delay: 0.85, duration: 1, ease: [0.2, 0.7, 0.2, 1] }}
               className="mt-10 max-w-xl"
             >
-              <p className="font-serif text-2xl italic text-ink/80 md:text-3xl">
-                Complexity, <span className="grad-text font-medium not-italic">removed.</span>
-              </p>
-              <p className="mt-6 max-w-md font-sans text-base leading-relaxed text-ink/70 md:text-[17px]">
-                Co-Founder &amp; CSO at <span className="font-medium text-ink">Sharpei AI</span> — building the AI infrastructure for equipment lenders. Previously Yakk. Forbes 30U30 Europe.
+              <p className="font-sans text-2xl font-medium leading-tight text-ink md:text-3xl">
+                2X Entrepreneur, <span className="grad-text font-semibold">GTM &amp; Innovation Specialist</span>.
               </p>
             </motion.div>
 
@@ -278,16 +293,16 @@ function Hero() {
                 animate={{ rotate: -360 }}
                 transition={{ duration: 50, repeat: Infinity, ease: 'linear' }}
                 className="absolute -inset-4 rounded-full opacity-40 blur-2xl"
-                style={{ background: 'conic-gradient(from 0deg, rgba(89,71,255,0.25), rgba(11,26,173,0.05), rgba(126,112,255,0.25), rgba(89,71,255,0.25))' }}
+                style={{ background: 'conic-gradient(from 0deg, rgba(11,46,63,0.25), rgba(6,25,35,0.05), rgba(45,92,110,0.25), rgba(11,46,63,0.25))' }}
               />
               <motion.div style={{ scale: photoScale }} className="relative photo-frame overflow-hidden rounded-[6px] bg-bone">
-                <img src={PHOTO} alt="Julián Azofra" className="aspect-[4/5] w-full object-cover" />
+                <HeroPhotoCarousel />
                 {/* Tag badge over photo */}
-                <div className="absolute left-3 top-3 flex items-center gap-2 rounded-full bg-paper/85 px-3 py-1 font-mono text-[9px] uppercase tracking-[0.22em] text-ink backdrop-blur">
+                <div className="absolute left-3 top-3 z-10 flex items-center gap-2 rounded-full bg-paper/85 px-3 py-1 font-mono text-[9px] uppercase tracking-[0.22em] text-ink backdrop-blur">
                   <span className="h-1.5 w-1.5 rounded-full bg-violet" />
                   Founder · CSO
                 </div>
-                <div className="absolute bottom-3 right-3 rounded-full bg-ink/85 px-3 py-1 font-mono text-[9px] uppercase tracking-[0.22em] text-paper backdrop-blur">
+                <div className="absolute bottom-3 right-3 z-10 rounded-full bg-ink/85 px-3 py-1 font-mono text-[9px] uppercase tracking-[0.22em] text-paper backdrop-blur">
                   Forbes 30U30
                 </div>
               </motion.div>
@@ -316,6 +331,39 @@ function Hero() {
         </motion.div>
       </motion.div>
     </section>
+  )
+}
+
+function HeroPhotoCarousel() {
+  const [idx, setIdx] = useState(0)
+  useEffect(() => {
+    const id = setInterval(() => setIdx((i) => (i + 1) % HERO_PHOTOS.length), 3000)
+    return () => clearInterval(id)
+  }, [])
+  return (
+    <div className="relative aspect-[4/5] w-full overflow-hidden">
+      {HERO_PHOTOS.map((src, i) => (
+        <motion.img
+          key={src}
+          src={src}
+          alt="Julián Azofra"
+          initial={false}
+          animate={{ opacity: i === idx ? 1 : 0, scale: i === idx ? 1 : 1.04 }}
+          transition={{ duration: 1.1, ease: [0.2, 0.7, 0.2, 1] }}
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+      ))}
+      <div className="absolute bottom-3 left-1/2 z-10 flex -translate-x-1/2 gap-1.5">
+        {HERO_PHOTOS.map((_, i) => (
+          <span
+            key={i}
+            className={`h-1 rounded-full transition-all duration-500 ${
+              i === idx ? 'w-6 bg-paper' : 'w-1.5 bg-paper/50'
+            }`}
+          />
+        ))}
+      </div>
+    </div>
   )
 }
 
@@ -372,8 +420,7 @@ function Counter({ to, prefix = '', suffix = '', duration = 1400 }) {
 function TickerBand() {
   const items = [
     'Forbes 30 Under 30', 'Co-Founder · Sharpei AI', 'AI Infrastructure',
-    'Equipment Finance', 'New York · Madrid', 'Slush 100',
-    'Complexity Removed', 'Embedded Finance', 'Circular Economy',
+    'New York · Madrid', 'Embedded Finance', 'Circular Economy',
   ]
   const row = [...items, ...items]
   return (
@@ -454,7 +501,7 @@ function Showcase() {
             </div>
             <div className="text-paper">
               <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-paper/70">Forbes Europe · Retail &amp; Ecommerce · 2024</div>
-              <h3 className="mt-2 font-serif text-4xl font-light leading-[0.95] tracking-tightest md:text-6xl">
+              <h3 className="mt-2 font-sans text-4xl font-bold leading-[0.95] tracking-tightest md:text-6xl">
                 <span className="italic">Youngest</span> on the list.
               </h3>
               <p className="mt-3 max-w-md font-sans text-sm text-paper/80 md:text-base">
@@ -638,16 +685,7 @@ function Journey() {
       <div className="sticky top-0 flex h-screen flex-col justify-center overflow-hidden">
         {/* Header strip */}
         <div className="mx-auto w-full max-w-[1600px] px-6">
-          <div className="flex items-baseline justify-between border-b border-smoke pb-4 font-mono text-[10px] uppercase tracking-[0.22em] text-ink/60">
-            <span>[ 01 / Section ]</span>
-            <span className="hidden md:inline">Scroll · Each chapter pinned</span>
-            <span>
-              {String(active + 1).padStart(2, '0')}{' '}
-              <span className="text-ink/30">/</span> {String(totalCards).padStart(2, '0')}{' '}
-              <span className="ml-3 text-ink">{EXPERIENCE[active]?.company}</span>
-            </span>
-          </div>
-          <h2 className="mt-6 font-serif text-[12vw] font-light leading-[0.92] tracking-tightest md:text-[8vw]">
+          <h2 className="font-sans text-[12vw] font-bold leading-[0.92] tracking-tightest md:text-[8vw]">
             <MaskLine className="block">The Journey.</MaskLine>
           </h2>
         </div>
@@ -757,7 +795,7 @@ function ExperienceCard({ item, index, active, width }) {
       {/* Info */}
       <div className="flex flex-1 flex-col justify-between border-t border-smoke p-5 md:p-6">
         <div>
-          <h3 className="font-serif text-2xl font-light leading-[1] tracking-tightest md:text-3xl">{item.company}</h3>
+          <h3 className="font-sans text-2xl font-bold leading-[1] tracking-tightest md:text-3xl">{item.company}</h3>
           <div className="mt-1 font-mono text-[10px] uppercase tracking-[0.22em] text-ink/60">{item.title}</div>
           <p className="mt-3 line-clamp-3 font-sans text-[13px] leading-relaxed text-ink/70 md:text-sm">
             {item.body}
@@ -807,7 +845,7 @@ function Logo({ item, accent }) {
   if (item.logoMode === 'mark') {
     return (
       <div className="text-center">
-        <div className="font-serif text-[120px] font-light leading-[0.85] tracking-tightest text-ink" style={{ color: accent }}>
+        <div className="font-sans text-[120px] font-bold leading-[0.85] tracking-tightest text-ink" style={{ color: accent }}>
           {item.logoText}
         </div>
         <div className="mt-2 font-mono text-[10px] uppercase tracking-[0.3em] text-ink/50">
@@ -820,11 +858,149 @@ function Logo({ item, accent }) {
   return (
     <div className="text-center">
       <div
-        className="font-serif text-5xl font-light leading-[0.9] tracking-tightest md:text-6xl"
+        className="font-sans text-5xl font-bold leading-[0.9] tracking-tightest md:text-6xl"
         style={{ color: accent }}
       >
         {item.logoText}
       </div>
+    </div>
+  )
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+ * ATLAS — interactive 3D globe with city pins
+ * ──────────────────────────────────────────────────────────────────────────── */
+function Atlas() {
+  return (
+    <section id="atlas" className="relative mx-auto max-w-[1600px] px-6 py-12 md:py-16">
+      <SectionHead idx="A" title="On the Map" subtitle="Cities, lived" />
+      <div className="mt-10 grid grid-cols-12 items-center gap-8 md:gap-12">
+        <div className="col-span-12 md:col-span-7">
+          <Globe />
+        </div>
+        <div className="col-span-12 md:col-span-5">
+          <p className="font-sans text-base leading-relaxed text-ink/70 md:text-[17px]">
+            From Madrid to New York, via Lancaster, Valencia, and the Bay Area. A map of the places I&apos;ve lived, and the entrepreneurs and friends I met along the way who shaped my journey.
+          </p>
+          <ul className="mt-8 grid gap-4">
+            {CITIES.map((c, i) => (
+              <li key={c.name} className="flex items-baseline justify-between gap-4 border-t border-smoke pt-3">
+                <div className="flex items-baseline gap-3">
+                  <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-ink/40">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  <span className="font-sans text-2xl font-bold tracking-tightest">{c.name}</span>
+                </div>
+                <div className="text-right">
+                  <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-ink/60">{c.tag}</div>
+                  <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-violet">{c.years}</div>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function Globe() {
+  const canvasRef = useRef(null)
+  const pointerInteracting = useRef(null)
+  const pointerInteractionMovement = useRef(0)
+
+  useEffect(() => {
+    if (!canvasRef.current) return
+    let phi = 0
+    let rafId = 0
+    let width = canvasRef.current.offsetWidth || 600
+
+    const globe = createGlobe(canvasRef.current, {
+      devicePixelRatio: 2,
+      width: width * 2,
+      height: width * 2,
+      phi: 0,
+      theta: 0.3,
+      dark: 1,
+      diffuse: 1.2,
+      mapSamples: 16000,
+      mapBrightness: 8,
+      baseColor: [0.85, 0.92, 1.0],
+      markerColor: [0.25, 0.65, 1.0],
+      glowColor: [0.3, 0.55, 0.75],
+      markers: CITIES.map((c) => ({ location: c.coords, size: 0.08 })),
+    })
+
+    const tick = () => {
+      if (!pointerInteracting.current) phi += 0.004
+      const w = canvasRef.current?.offsetWidth || width
+      if (w !== width) width = w
+      globe.update({
+        phi: phi + pointerInteractionMovement.current,
+        theta: 0.3,
+        width: width * 2,
+        height: width * 2,
+      })
+      rafId = requestAnimationFrame(tick)
+    }
+    rafId = requestAnimationFrame(tick)
+
+    requestAnimationFrame(() => {
+      if (canvasRef.current) canvasRef.current.style.opacity = '1'
+    })
+
+    return () => {
+      cancelAnimationFrame(rafId)
+      globe.destroy()
+    }
+  }, [])
+
+  return (
+    <div className="relative mx-auto aspect-square w-full max-w-[640px]">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-[6%] rounded-full"
+        style={{
+          background: 'radial-gradient(circle at 35% 30%, #0f3548 0%, #061923 70%, #03101a 100%)',
+          boxShadow: '0 50px 100px -30px rgba(11,46,63,0.55)',
+        }}
+      />
+      <canvas
+        ref={canvasRef}
+        onPointerDown={(e) => {
+          pointerInteracting.current = e.clientX - pointerInteractionMovement.current
+          if (canvasRef.current) canvasRef.current.style.cursor = 'grabbing'
+        }}
+        onPointerUp={() => {
+          pointerInteracting.current = null
+          if (canvasRef.current) canvasRef.current.style.cursor = 'grab'
+        }}
+        onPointerOut={() => {
+          pointerInteracting.current = null
+          if (canvasRef.current) canvasRef.current.style.cursor = 'grab'
+        }}
+        onMouseMove={(e) => {
+          if (pointerInteracting.current !== null) {
+            const delta = e.clientX - pointerInteracting.current
+            pointerInteractionMovement.current = delta / 200
+          }
+        }}
+        onTouchMove={(e) => {
+          if (pointerInteracting.current !== null && e.touches[0]) {
+            const delta = e.touches[0].clientX - pointerInteracting.current
+            pointerInteractionMovement.current = delta / 100
+          }
+        }}
+        style={{
+          width: '100%',
+          height: '100%',
+          cursor: 'grab',
+          contain: 'layout paint size',
+          opacity: 0,
+          transition: 'opacity 1s ease',
+          position: 'relative',
+        }}
+      />
     </div>
   )
 }
@@ -841,22 +1017,6 @@ function Press() {
         {PRESS.map((p, i) => (
           <PressCard key={p.outlet + i} item={p} index={i} />
         ))}
-      </div>
-
-      {/* Marquee row of outlet names below */}
-      <div className="mt-6 flex items-center overflow-hidden border-y border-smoke py-5">
-        <motion.div
-          animate={{ x: ['0%', '-50%'] }}
-          transition={{ ease: 'linear', duration: 40, repeat: Infinity }}
-          className="flex flex-none items-center gap-12 whitespace-nowrap pr-12"
-        >
-          {[...PRESS, ...PRESS].map((p, i) => (
-            <span key={i} className="flex items-center gap-12 font-serif text-3xl tracking-tightest md:text-4xl">
-              <span className={i % 2 === 0 ? 'italic' : ''}>{p.outlet}</span>
-              <span className="text-violet">✦</span>
-            </span>
-          ))}
-        </motion.div>
       </div>
     </section>
   )
@@ -881,10 +1041,20 @@ function PressCard({ item, index }) {
       transition={{ type: 'spring', stiffness: 130, damping: 20, delay: index * 0.05 }}
       whileHover={{ y: -4 }}
       className={`group relative flex flex-col justify-between overflow-hidden rounded-[8px] border p-6 transition-colors md:p-8 ${cls} ${
-        isHero ? 'border-ink/10' : 'border-smoke bg-paper hover:border-violet/40'
+        isHero ? 'border-ink/10 min-h-[420px] md:min-h-[560px]' : 'border-smoke bg-paper hover:border-violet/40'
       }`}
     >
-      <div className={`flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.22em] ${isHero ? 'text-paper/60' : 'text-ink/60'}`}>
+      {isHero && item.image && (
+        <>
+          <img
+            src={item.image}
+            alt={item.headline}
+            className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-90 transition-transform duration-700 group-hover:scale-105"
+          />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink via-ink/55 to-ink/10" />
+        </>
+      )}
+      <div className={`relative flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.22em] ${isHero ? 'text-paper/80' : 'text-ink/60'}`}>
         <span className="flex items-center gap-2">
           <span className="text-violet">●</span>
           <span>{item.outlet}</span>
@@ -892,16 +1062,16 @@ function PressCard({ item, index }) {
         <span>{item.date}</span>
       </div>
 
-      <div className="my-8">
-        <h3 className={`font-serif font-light leading-[1.05] tracking-tightest ${isHero ? 'text-3xl md:text-5xl' : 'text-2xl md:text-3xl'}`}>
+      <div className="relative my-8">
+        <h3 className={`font-sans font-semibold leading-[1.05] tracking-tightest ${isHero ? 'text-3xl md:text-5xl' : 'text-2xl md:text-3xl'}`}>
           {item.headline}
         </h3>
-        <p className={`mt-4 font-sans text-sm leading-relaxed md:text-base ${isHero ? 'text-paper/70' : 'text-ink/70'}`}>
+        <p className={`mt-4 font-sans text-sm leading-relaxed md:text-base ${isHero ? 'text-paper/80' : 'text-ink/70'}`}>
           {item.quote}
         </p>
       </div>
 
-      <div className={`flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.22em] ${isHero ? 'text-paper/60' : 'text-ink/60'}`}>
+      <div className={`relative flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.22em] ${isHero ? 'text-paper/80' : 'text-ink/60'}`}>
         <span className="flex items-center gap-2">
           <span className={isHero ? 'text-paper' : 'text-violet'}>{item.accent}</span>
         </span>
@@ -928,7 +1098,7 @@ function Arsenal() {
           <div className="flex h-full flex-col justify-between gap-8">
             <div className="mt-5">
               <img src={LOGO} alt="Sharpei" className="h-7 w-auto opacity-95" />
-              <h3 className="mt-6 font-serif text-4xl font-light leading-[0.95] tracking-tightest md:text-7xl">
+              <h3 className="mt-6 font-sans text-4xl font-bold leading-[0.95] tracking-tightest md:text-7xl">
                 The AI infrastructure for{' '}
                 <span className="grad-text italic">equipment finance.</span>
               </h3>
@@ -946,7 +1116,7 @@ function Arsenal() {
               <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-ink/60">Forbes Europe · Retail &amp; Ecommerce · 2024</div>
             </div>
           </div>
-          <div className="mt-4 font-sans text-sm text-ink/70">Listed as the youngest founder on the European ecommerce list.</div>
+          <div className="mt-4 font-sans text-sm text-ink/70">Listed as the youngest founder on the European Retail list in 2024.</div>
         </TiltTile>
 
         {/* Languages */}
@@ -991,25 +1161,9 @@ function Arsenal() {
           </div>
         </TiltTile>
 
-        {/* Yakk — past chapter */}
-        <TiltTile className="col-span-12 md:col-span-7" delay={0.25}>
-          <TileHeader badge="PRECEDENT" k="06" />
-          <div className="mt-3 grid grid-cols-12 items-end gap-4">
-            <div className="col-span-12 md:col-span-7">
-              <h3 className="font-serif text-4xl font-light leading-[0.95] tracking-tightest md:text-6xl">Yakk.</h3>
-              <p className="mt-2 max-w-md font-sans text-sm text-ink/70 md:text-base">Largest B2B rental marketplace in Spain. Slush 100 · El Referente. <span className="italic">Own less, live more.</span></p>
-            </div>
-            <div className="col-span-12 grid grid-cols-3 gap-3 md:col-span-5">
-              <KV k="Period"><span className="text-ink">2020 — 2023</span></KV>
-              <KV k="Award"><span className="text-ink">Best Enterprise</span></KV>
-              <KV k="Status"><span className="text-violet">Exited</span></KV>
-            </div>
-          </div>
-        </TiltTile>
-
         {/* Communities */}
         <TiltTile className="col-span-12 md:col-span-5" delay={0.3}>
-          <TileHeader badge="COMMUNITIES" k="07" />
+          <TileHeader badge="COMMUNITIES" k="06" />
           <div className="mt-4 grid grid-cols-3 gap-3">
             {COMMUNITIES.map((c) => (
               <div
@@ -1056,10 +1210,7 @@ function SectionHead({ idx, title, subtitle }) {
   const inView = useInView(ref, { once: true, amount: 0.2 })
   return (
     <div>
-      <div className="flex items-baseline justify-between border-b border-smoke pb-4 font-mono text-[10px] uppercase tracking-[0.22em] text-ink/60">
-        <span>[ {idx} / Section ]</span><span>{subtitle}</span>
-      </div>
-      <h2 ref={ref} className="mt-8 font-serif text-[12vw] font-light leading-[0.92] tracking-tightest md:text-[7.6vw]">
+      <h2 ref={ref} className="font-sans text-[12vw] font-bold leading-[0.92] tracking-tightest md:text-[7.6vw]">
         {title.split(' ').map((w, i) => (
           <span key={i} className="mask">
             <motion.span
@@ -1087,36 +1238,35 @@ function Footer() {
       <div className="pointer-events-none absolute inset-0 opacity-90"
         style={{
           background:
-            'radial-gradient(circle at 20% 0%, rgba(89,71,255,0.35), transparent 40%), radial-gradient(circle at 90% 80%, rgba(11,26,173,0.4), transparent 45%)',
+            'radial-gradient(circle at 20% 0%, rgba(11,46,63,0.35), transparent 40%), radial-gradient(circle at 90% 80%, rgba(6,25,35,0.4), transparent 45%)',
         }}
       />
 
       <div className="relative mx-auto max-w-[1600px]">
-        <div className="mb-10 flex items-baseline justify-between border-b border-paper/10 pb-4 font-mono text-[10px] uppercase tracking-[0.22em] text-paper/60">
-          <span>[ 04 / Contact ]</span><span>End of file</span>
-        </div>
-
-        <h2 ref={headRef} className="font-serif text-[14vw] font-light leading-[0.9] tracking-tightest md:text-[10vw]">
+        <h2 ref={headRef} className="font-sans text-[10vw] font-bold leading-[0.95] tracking-tightest md:text-[6.4vw]">
           <span className="block mask">
             <motion.span
               initial={{ y: '110%' }} animate={headInView ? { y: '0%' } : { y: '110%' }}
               transition={{ duration: 1.1, ease: [0.2, 0.7, 0.2, 1] }}
               className="block"
-            >Let&apos;s remove</motion.span>
+            >Building with people</motion.span>
           </span>
           <span className="block mask">
             <motion.span
               initial={{ y: '110%' }} animate={headInView ? { y: '0%' } : { y: '110%' }}
               transition={{ duration: 1.1, delay: 0.12, ease: [0.2, 0.7, 0.2, 1] }}
-              className="block italic grad-text"
-            >complexity.</motion.span>
+              className="block"
+            >who make <span className="italic grad-text">things happen.</span></motion.span>
           </span>
         </h2>
 
         <div className="mt-8 grid grid-cols-12 gap-6">
           <div className="col-span-12 md:col-span-7">
             <p className="max-w-xl font-sans text-base leading-relaxed text-paper/70 md:text-[17px]">
-              For partnerships, deal flow at Sharpei, mentorship sessions, or the rare cold email that earns a reply — start the conversation on LinkedIn.
+              For partnerships, Sharpei, or anything you&apos;re building, LinkedIn is where I&apos;m most responsive.
+            </p>
+            <p className="mt-4 max-w-xl font-sans text-base leading-relaxed text-paper/70 md:text-[17px]">
+              If you&apos;re an entrepreneur (starting or exiting), an investor, a builder, a dreamer, or just someone who thinks we should meet — reach out. I&apos;m always up for a good conversation.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <MagneticButton href="https://www.linkedin.com/in/julian-azofra/">

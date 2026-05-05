@@ -9,17 +9,17 @@ export default {
         smoke: '#E5E5EA',
         graphite: '#76747F',
         ink: '#0A0A12',
-        violet: '#5947FF',
-        cobalt: '#0B1AAD',
-        glow: '#7E70FF',
+        violet: '#0B2E3F',
+        cobalt: '#061923',
+        glow: '#2D5C6E',
       },
       fontFamily: {
-        serif: ['Fraunces', 'ui-serif', 'Georgia', 'serif'],
+        serif: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
         mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'monospace'],
         sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
       },
       letterSpacing: {
-        tightest: '-0.06em',
+        tightest: '-0.045em',
       },
       animation: {
         'spin-slow': 'spin 14s linear infinite',
